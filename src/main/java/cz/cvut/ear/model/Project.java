@@ -1,31 +1,45 @@
 package cz.cvut.ear.model;
 
 import cz.cvut.ear.model.enums.ProjectStatus;
-import jakarta.persistence.Entity;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToMany;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
-import java.util.List;
 import java.util.Set;
 
 @Entity
 public class Project extends AbstractEntity {
+    @Column(nullable = false, unique = true)
     private String projectName;
+
     private LocalDateTime startDateTime;
     private LocalDateTime endDateTime;
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
     private ProjectStatus projectStatus;
+
     @ManyToMany(mappedBy = "userProjects")
     private Set<User> usersInProject;
 
     @OneToMany(mappedBy = "project")
-    private List<Task> tasksInProject;
+    private Set<Task> tasksInProject;
 
-//    private List<Sprint> sprintsInProject;
     private String description;
 
     public Project() {
+    }
+
+    @Override
+    public String toString() {
+        return "Project{" +
+                "projectName='" + projectName + '\'' +
+                ", startDateTime=" + startDateTime +
+                ", endDateTime=" + endDateTime +
+                ", projectStatus=" + projectStatus +
+                ", usersInProject=" + usersInProject +
+                ", tasksInProject=" + tasksInProject +
+                ", description='" + description + '\'' +
+                '}';
     }
 
     // getters and setters
@@ -76,5 +90,13 @@ public class Project extends AbstractEntity {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public Set<Task> getTasksInProject() {
+        return tasksInProject;
+    }
+
+    public void setTasksInProject(Set<Task> tasksInProject) {
+        this.tasksInProject = tasksInProject;
     }
 }

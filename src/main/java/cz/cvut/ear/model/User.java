@@ -9,14 +9,22 @@ import java.util.Set;
 @Entity
 @Table(name = "AGILE_USER")
 public class User extends AbstractEntity {
+    @Column(nullable = false)
     private String name;
+    @Column(nullable = false)
     private String surname;
+    @Column(unique = true, nullable = false)
     private String username;
+
+    @Column(unique = true)
     private String email;
-    private UserRole role;
+
+    @Enumerated(EnumType.STRING)
+    private UserRole role; // = level access
 
     @OneToMany(mappedBy = "assignee")
     private List<Task> userTasks;
+
     @ManyToMany
     @JoinTable(
             name = "USER_PROJECT",
@@ -27,6 +35,19 @@ public class User extends AbstractEntity {
 
 
     public User() {
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "name='" + name + '\'' +
+                ", surname='" + surname + '\'' +
+                ", username='" + username + '\'' +
+                ", email='" + email + '\'' +
+                ", role=" + role +
+                ", userTasks=" + userTasks +
+                ", userProjects=" + userProjects +
+                '}';
     }
 
     // getters and setters

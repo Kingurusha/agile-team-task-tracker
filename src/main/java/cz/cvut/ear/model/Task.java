@@ -1,5 +1,6 @@
 package cz.cvut.ear.model;
 
+import cz.cvut.ear.model.enums.Priority;
 import cz.cvut.ear.model.enums.TaskStatus;
 import jakarta.persistence.*;
 
@@ -11,7 +12,7 @@ import java.util.Set;
 public class Task extends AbstractEntity {
     @Column(nullable = false)
     private String taskName;
-    private Integer storyPoints;
+    private Integer taskPoints;
 
     @ManyToMany
     @JoinTable(
@@ -20,31 +21,61 @@ public class Task extends AbstractEntity {
             inverseJoinColumns = @JoinColumn(name = "LABEL_ID")
     )
     private Set<Label> labels;
+
+    @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private TaskStatus taskStatus;
+
+    @Enumerated(EnumType.STRING)
+    private Priority priority;
+
     @ManyToOne
     @JoinColumn(name = "USER_ID")
     private User assignee;
 
     @ManyToMany
     @JoinTable(
-            name = "TASK_PARTIC",
+            name = "TASK_PARTICIPANTS",
             joinColumns = @JoinColumn(name = "TASK_ID"),
             inverseJoinColumns = @JoinColumn(name = "USER_ID")
     )
     private List<User> participants;
+
+    @Column(nullable = false)
     private LocalDateTime creationDate;
+    @Column(nullable = false)
     private LocalDateTime lastUpdateDate;
+    private LocalDateTime dueDate;
+
     @ManyToOne
     @JoinColumn(name = "SPRINT_ID")
     private Sprint sprint;
+
     @ManyToOne
     @JoinColumn(name = "PROJECT_ID")
     private Project project;
+
     private String description;
 
 
     public Task() {
+    }
+
+    @Override
+    public String toString() {
+        return "Task{" +
+                "taskName='" + taskName + '\'' +
+                ", storyPoints=" + taskPoints +
+                ", labels=" + labels +
+                ", taskStatus=" + taskStatus +
+                ", assignee=" + assignee +
+                ", participants=" + participants +
+                ", creationDate=" + creationDate +
+                ", lastUpdateDate=" + lastUpdateDate +
+                ", sprint=" + sprint +
+                ", project=" + project +
+                ", description='" + description + '\'' +
+                '}';
     }
 
     // getters and setters
@@ -57,12 +88,12 @@ public class Task extends AbstractEntity {
         this.taskName = taskName;
     }
 
-    public Integer getStoryPoints() {
-        return storyPoints;
+    public Integer getTaskPoints() {
+        return taskPoints;
     }
 
-    public void setStoryPoints(Integer storyPoints) {
-        this.storyPoints = storyPoints;
+    public void setTaskPoints(Integer storyPoints) {
+        this.taskPoints = storyPoints;
     }
 
     public TaskStatus getTaskStatus() {
@@ -127,5 +158,29 @@ public class Task extends AbstractEntity {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public Set<Label> getLabels() {
+        return labels;
+    }
+
+    public void setLabels(Set<Label> labels) {
+        this.labels = labels;
+    }
+
+    public Priority getPriority() {
+        return priority;
+    }
+
+    public void setPriority(Priority priority) {
+        this.priority = priority;
+    }
+
+    public LocalDateTime getDueDate() {
+        return dueDate;
+    }
+
+    public void setDueDate(LocalDateTime dueDate) {
+        this.dueDate = dueDate;
     }
 }
