@@ -1,19 +1,29 @@
 package cz.cvut.ear.model;
 
 import cz.cvut.ear.model.enums.UserRole;
-import jakarta.persistence.Entity;
+import jakarta.persistence.*;
 
 import java.util.List;
+import java.util.Set;
 
 @Entity
+@Table(name = "AGILE_USER")
 public class User extends AbstractEntity {
     private String name;
     private String surname;
     private String username;
     private String email;
     private UserRole role;
+
+    @OneToMany(mappedBy = "assignee")
     private List<Task> userTasks;
-    private List<Project> userProjects;
+    @ManyToMany
+    @JoinTable(
+            name = "USER_PROJECT",
+            joinColumns = @JoinColumn(name = "USER_ID"),
+            inverseJoinColumns = @JoinColumn(name = "PROJECT_ID")
+    )
+    private Set<Project> userProjects;
 
 
     public User() {
@@ -69,11 +79,11 @@ public class User extends AbstractEntity {
         this.userTasks = userTasks;
     }
 
-    public List<Project> getUserProjects() {
+    public Set<Project> getUserProjects() {
         return userProjects;
     }
 
-    public void setUserProjects(List<Project> userProjects) {
+    public void setUserProjects(Set<Project> userProjects) {
         this.userProjects = userProjects;
     }
 }

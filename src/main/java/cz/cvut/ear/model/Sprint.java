@@ -2,6 +2,7 @@ package cz.cvut.ear.model;
 
 import cz.cvut.ear.model.enums.SprintStatus;
 import jakarta.persistence.Entity;
+import jakarta.persistence.OneToMany;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -11,6 +12,7 @@ public class Sprint extends AbstractEntity {
     private String sprintName;
     private LocalDateTime startDateTime;
     private LocalDateTime endDateTime;
+    @OneToMany(mappedBy = "sprint")
     private List<Task> tasksInSprint;
     private SprintStatus sprintStatus;
 

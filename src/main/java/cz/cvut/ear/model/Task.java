@@ -5,18 +5,41 @@ import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 public class Task extends AbstractEntity {
+    @Column(nullable = false)
     private String taskName;
     private Integer storyPoints;
+
+    @ManyToMany
+    @JoinTable(
+            name = "TASK_LABEL",
+            joinColumns = @JoinColumn(name = "TASK_ID"),
+            inverseJoinColumns = @JoinColumn(name = "LABEL_ID")
+    )
+    private Set<Label> labels;
+    @Column(nullable = false)
     private TaskStatus taskStatus;
+    @ManyToOne
+    @JoinColumn(name = "USER_ID")
     private User assignee;
+
+    @ManyToMany
+    @JoinTable(
+            name = "TASK_PARTIC",
+            joinColumns = @JoinColumn(name = "TASK_ID"),
+            inverseJoinColumns = @JoinColumn(name = "USER_ID")
+    )
     private List<User> participants;
-    private List<User> watchers;
     private LocalDateTime creationDate;
     private LocalDateTime lastUpdateDate;
+    @ManyToOne
+    @JoinColumn(name = "SPRINT_ID")
     private Sprint sprint;
+    @ManyToOne
+    @JoinColumn(name = "PROJECT_ID")
     private Project project;
     private String description;
 
@@ -64,14 +87,6 @@ public class Task extends AbstractEntity {
 
     public void setParticipants(List<User> participants) {
         this.participants = participants;
-    }
-
-    public List<User> getWatchers() {
-        return watchers;
-    }
-
-    public void setWatchers(List<User> watchers) {
-        this.watchers = watchers;
     }
 
     public LocalDateTime getCreationDate() {

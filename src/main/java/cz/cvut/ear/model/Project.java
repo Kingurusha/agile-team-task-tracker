@@ -2,9 +2,13 @@ package cz.cvut.ear.model;
 
 import cz.cvut.ear.model.enums.ProjectStatus;
 import jakarta.persistence.Entity;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToMany;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 public class Project extends AbstractEntity {
@@ -12,8 +16,12 @@ public class Project extends AbstractEntity {
     private LocalDateTime startDateTime;
     private LocalDateTime endDateTime;
     private ProjectStatus projectStatus;
-    private List<User> usersInProject;
-//    private List<Task> tasksInProject;
+    @ManyToMany(mappedBy = "userProjects")
+    private Set<User> usersInProject;
+
+    @OneToMany(mappedBy = "project")
+    private List<Task> tasksInProject;
+
 //    private List<Sprint> sprintsInProject;
     private String description;
 
@@ -54,11 +62,11 @@ public class Project extends AbstractEntity {
         this.projectStatus = projectStatus;
     }
 
-    public List<User> getUsersInProject() {
+    public Set<User> getUsersInProject() {
         return usersInProject;
     }
 
-    public void setUsersInProject(List<User> usersInProject) {
+    public void setUsersInProject(Set<User> usersInProject) {
         this.usersInProject = usersInProject;
     }
 
