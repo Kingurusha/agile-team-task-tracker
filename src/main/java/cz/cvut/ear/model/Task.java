@@ -31,7 +31,7 @@ public class Task extends AbstractEntity {
 
     @ManyToOne
     @JoinColumn(name = "USER_ID")
-    private User assignee;
+    private Employee assignee;
 
     @ManyToMany
     @JoinTable(
@@ -39,7 +39,7 @@ public class Task extends AbstractEntity {
             joinColumns = @JoinColumn(name = "TASK_ID"),
             inverseJoinColumns = @JoinColumn(name = "USER_ID")
     )
-    private List<User> participants;
+    private List<Employee> participants;
 
     @Column(nullable = false)
     private LocalDateTime creationDate;
@@ -104,19 +104,19 @@ public class Task extends AbstractEntity {
         this.taskStatus = taskStatus;
     }
 
-    public User getAssignee() {
+    public Employee getAssignee() {
         return assignee;
     }
 
-    public void setAssignee(User assignee) {
+    public void setAssignee(Employee assignee) {
         this.assignee = assignee;
     }
 
-    public List<User> getParticipants() {
+    public List<Employee> getParticipants() {
         return participants;
     }
 
-    public void setParticipants(List<User> participants) {
+    public void setParticipants(List<Employee> participants) {
         this.participants = participants;
     }
 

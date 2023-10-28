@@ -7,8 +7,10 @@ import java.util.List;
 import java.util.Set;
 
 @Entity
-@Table(name = "AGILE_USER")
-public class User extends AbstractEntity {
+@Table(name = "AGILE_USER/EMPLOYEE")
+@Inheritance(strategy=InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name = "EMP_TYPE")
+public abstract class Employee extends AbstractEntity {
     @Column(nullable = false)
     private String name;
     @Column(nullable = false)
@@ -34,21 +36,9 @@ public class User extends AbstractEntity {
     private Set<Project> userProjects;
 
 
-    public User() {
+    public Employee() {
     }
 
-    @Override
-    public String toString() {
-        return "User{" +
-                "name='" + name + '\'' +
-                ", surname='" + surname + '\'' +
-                ", username='" + username + '\'' +
-                ", email='" + email + '\'' +
-                ", role=" + role +
-                ", userTasks=" + userTasks +
-                ", userProjects=" + userProjects +
-                '}';
-    }
 
     // getters and setters
 

@@ -19,7 +19,7 @@ public class Project extends AbstractEntity {
     private ProjectStatus projectStatus;
 
     @ManyToMany(mappedBy = "userProjects")
-    private Set<User> usersInProject;
+    private Set<Employee> usersInProject;
 
     @OneToMany(mappedBy = "project")
     private Set<Task> tasksInProject;
@@ -76,11 +76,11 @@ public class Project extends AbstractEntity {
         this.projectStatus = projectStatus;
     }
 
-    public Set<User> getUsersInProject() {
+    public Set<Employee> getUsersInProject() {
         return usersInProject;
     }
 
-    public void setUsersInProject(Set<User> usersInProject) {
+    public void setUsersInProject(Set<Employee> usersInProject) {
         this.usersInProject = usersInProject;
     }
 
