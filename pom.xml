@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>cz.cvut.ear</groupId>
-    <artifactId>agile</artifactId>
+    <artifactId>agile-team-task-tracker</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>jar</packaging>
 
@@ -22,7 +22,6 @@
     </parent>
 
     <dependencies>
-
         <!-- Web application -->
         <!-- Will pull in web-related dependencies, including Jackson for JSON -->
         <dependency>
@@ -31,15 +30,16 @@
         </dependency>
 
         <!-- JPA dependencies -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-data-jpa</artifactId>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>org.springframework.boot</groupId>-->
+<!--            <artifactId>spring-boot-starter-data-jpa</artifactId>-->
+<!--        </dependency>-->
 
         <!-- PostgreSQL driver -->
         <dependency>
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
+            <scope>runtime</scope>
         </dependency>
 
         <!-- Will pull in Spring security-related dependencies -->
@@ -79,7 +79,6 @@
         <dependency>
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
-<!--            <scope>test</scope>-->
             <scope>runtime</scope>
         </dependency>
     </dependencies>
